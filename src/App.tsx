@@ -14,7 +14,7 @@ const toolkit = [
   { name: 'The engine', tools: 'Node.js / Express / Flask / MongoDB', detail: 'APIs and applications, connected end to end.' },
   { name: 'The exploration', tools: 'Python / RAG / scikit-learn / C / C++', detail: 'Academic AI projects and a growing interest in embedded systems.' },
 ];
-
+//fix
 export default function App() {
   const [paused, setPaused] = useState(false);
   return <>
