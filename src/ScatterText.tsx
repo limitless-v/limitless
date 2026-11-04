@@ -17,12 +17,22 @@ export default function ScatterText({ children }: { children: string }) {
     let dots: Dot[] = [], frame = 0, hovering = false, previous = 0;
     let width = 0, height = 0, radius = 65;
     const pointer = { x: 0, y: 0 };
+    let disposed = false;
+    const paint = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#eeeee9';
+      for (const dot of dots) {
+        ctx.beginPath(); ctx.arc(dot.x, dot.y, 1, 0, Math.PI * 2); ctx.fill();
+      }
+    };
 
     const reset = () => {
       cancelAnimationFrame(frame); frame = 0; previous = 0; hovering = false;
-      host.classList.remove('is-scattering');
-      ctx.clearRect(0, 0, width, height);
-      dots = [];
+      for (const dot of dots) {
+        dot.x = dot.targetX = dot.homeX; dot.y = dot.targetY = dot.homeY;
+        dot.vx = dot.vy = 0;
+      }
+      paint();
     };
     const prepare = () => {
       const bounds = host.getBoundingClientRect();
@@ -49,6 +59,7 @@ export default function ScatterText({ children }: { children: string }) {
         }
       }
       host.classList.add('is-scattering');
+      paint();
     };
     const draw = (now: number) => {
       const dt = previous ? Math.min((now - previous) / 16.667, 2) : 1;
@@ -90,18 +101,24 @@ export default function ScatterText({ children }: { children: string }) {
     const enter = (event: PointerEvent) => {
       if (motion.matches || event.pointerType === 'touch') return;
       move(event); hovering = true;
-      if (!frame) { prepare(); previous = 0; frame = requestAnimationFrame(draw); }
+      if (!frame) { previous = 0; frame = requestAnimationFrame(draw); }
     };
     const leave = () => { hovering = false; };
     const visibility = () => { if (document.hidden) reset(); };
+    const rebuild = () => { reset(); prepare(); };
+    const observer = new ResizeObserver(rebuild);
+    observer.observe(host);
+    prepare();
+    void document.fonts.ready.then(() => { if (!disposed) rebuild(); });
     host.addEventListener('pointerenter', enter); host.addEventListener('pointermove', move);
     host.addEventListener('pointerleave', leave); host.addEventListener('pointercancel', leave);
-    window.addEventListener('resize', reset); motion.addEventListener('change', reset);
+    motion.addEventListener('change', reset);
     document.addEventListener('visibilitychange', visibility);
     return () => {
-      reset(); host.removeEventListener('pointerenter', enter); host.removeEventListener('pointermove', move);
+      disposed = true; observer.disconnect(); reset(); host.classList.remove('is-scattering');
+      host.removeEventListener('pointerenter', enter); host.removeEventListener('pointermove', move);
       host.removeEventListener('pointerleave', leave); host.removeEventListener('pointercancel', leave);
-      window.removeEventListener('resize', reset); motion.removeEventListener('change', reset);
+      motion.removeEventListener('change', reset);
       document.removeEventListener('visibilitychange', visibility);
     };
   }, [children]);

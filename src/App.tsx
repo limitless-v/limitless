@@ -20,7 +20,7 @@ export default function App() {
   return <>
     <a href="#main" className="skip-link">Skip to content</a>
     <header className="site-header flex items-center justify-between gap-6">
-      <a className="wordmark" href="#home" aria-label="Surajkumar K S home">limitless<span>®</span></a>
+      <a className="wordmark" href="#home" aria-label="Surajkumar KS home">Surajkumar KS<span>limitless-v</span></a>
       <nav aria-label="Main navigation" className="flex items-center gap-5 md:gap-9"><a href="#work">Work <span>01</span></a><a href="#about">About <span>02</span></a><a href="#contact">Let’s talk ↗</a></nav>
     </header>
     <main id="main">

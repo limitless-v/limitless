@@ -12,9 +12,9 @@ button { font: inherit; cursor: pointer; }
 .skip-link { position: fixed; top: -100px; left: 20px; z-index: 100; padding: 16px; background: white; color: black; }
 .skip-link:focus { top: 12px; }
 .site-header { padding: 22px 5vw; border-bottom: 1px solid #393938; }
-.wordmark { font-size: 36px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+.wordmark { display: flex; flex-direction: column; gap: 7px; font-size: 26px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
 .project-link:hover { text-decoration: underline; text-underline-offset: 6px; }
-.wordmark span { font: 12px var(--font-mono); vertical-align: top; letter-spacing: 0; margin-left: 8px; }
+.wordmark span { font: 10px var(--font-mono); letter-spacing: .08em; color: #aaa; }
 nav { font-size: 13px; }
 nav span { color: #888; margin-left: 6px; font: 9px var(--font-mono); }
 nav a, .text-link, footer a { transition: opacity .2s; }
@@ -96,6 +96,9 @@ footer { padding: 26px 5vw; border-top: 1px solid #393938; color: #999; font-siz
   .hero::after, .about-section::after, .contact-section::after { background-position: 83px 121px; animation-delay: -5s; animation-duration: 13s; }
 }
 @media (max-width: 600px) {
+  .wordmark { font-size: clamp(16px, 4vw, 24px); white-space: nowrap; }
+  .site-header { gap: 12px; }
+  .site-header nav { gap: 12px; }
   .section-pad { padding-top: 38px; padding-bottom: 38px; }
   .hero-layout { padding-top: 36px; padding-bottom: 40px; }
   .about-section { gap: 24px; }
