@@ -1,0 +1,12 @@
+# Allow all crawlers to index the full site
+User-agent: *
+Allow: /
+
+# Block admin and private routes from being indexed
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /_next/
+
+# Point to your sitemap
+Sitemap: https://limitless.surajkumarks-idk.workers.dev/sitemap.xml
