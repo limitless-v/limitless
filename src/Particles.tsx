@@ -8,6 +8,7 @@ export default function Particles({ paused }: { paused: boolean }) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const desktop = window.matchMedia('(min-width: 1024px)');
     let width = 0, height = 0, frame = 0, angle = 0, last = 0;
     const pointer = { x: 0, y: 0, active: false };
     const points = Array.from({ length: 1500 }, (_, i) => {
@@ -53,7 +54,7 @@ export default function Particles({ paused }: { paused: boolean }) {
       }
     }
     const tick = (time: number) => { draw(time); frame = requestAnimationFrame(tick); };
-    const start = () => { cancelAnimationFrame(frame); last = 0; if (!paused && !motion.matches && !document.hidden) frame = requestAnimationFrame(tick); else draw(0); };
+    const start = () => { cancelAnimationFrame(frame); last = 0; if (!desktop.matches) { ctx.clearRect(0, 0, width, height); return; } if (!paused && !motion.matches && !document.hidden) frame = requestAnimationFrame(tick); else draw(0); };
     const move = (event: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       pointer.x = (event.clientX - rect.left) / width * 2 - 1;
@@ -63,8 +64,9 @@ export default function Particles({ paused }: { paused: boolean }) {
     const observer = new ResizeObserver(resize); observer.observe(canvas);
     canvas.addEventListener('pointermove', move); canvas.addEventListener('pointerleave', leave);
     motion.addEventListener('change', start); document.addEventListener('visibilitychange', start);
+    desktop.addEventListener('change', start);
     resize(); start();
-    return () => { cancelAnimationFrame(frame); observer.disconnect(); canvas.removeEventListener('pointermove', move); canvas.removeEventListener('pointerleave', leave); motion.removeEventListener('change', start); document.removeEventListener('visibilitychange', start); };
+    return () => { cancelAnimationFrame(frame); observer.disconnect(); canvas.removeEventListener('pointermove', move); canvas.removeEventListener('pointerleave', leave); motion.removeEventListener('change', start); desktop.removeEventListener('change', start); document.removeEventListener('visibilitychange', start); };
   }, [paused]);
   return <canvas ref={canvasRef} className="particle-canvas" aria-hidden="true" />;
 }
