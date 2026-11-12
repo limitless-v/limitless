@@ -9,4 +9,4 @@ Disallow: /dashboard/
 Disallow: /_next/
 
 # Point to your sitemap
-Sitemap: https://limitless.surajkumarks-idk.workers.dev/sitemap.xml
+Sitemap: https://surajkumarks.is-a.dev/sitemap.xml

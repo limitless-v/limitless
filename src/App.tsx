@@ -6,8 +6,8 @@ const projects = [
   { name: 'Deeyam', category: 'WEB / PROJECT', description: 'Explore Deeyam at deeyam.com.', tags: ['Website'], href: 'https://deeyam.com' },
   { name: 'Phishing detection', category: 'ML / SECURITY', description: 'A Chrome extension with three levels of risk response, a Flask prediction API, and an offline heuristic fallback.', tags: ['scikit-learn', 'Flask', 'Chrome extension'] },
   { name: 'Rubik’s Cube Solver', category: 'COMPUTER VISION', description: 'From webcam to solution. Real-time face scanning, k-means color clustering, and the Kociemba algorithm.', tags: ['OpenCV', 'Python', 'Kociemba'] },
-  { name: 'Little Known Planet', category: 'WEB / MARKETPLACE', description: 'UI contributions for a travel marketplace: multi-tab listings, event contributors, and a social video feed.', tags: ['React', 'TypeScript', 'Node.js'] },
-  { name: '4 Dots', category: 'WEB / SERVICES', description: 'A printing services website connecting a React frontend with a .NET backend.', tags: ['React', '.NET'] },
+  { name: 'Little Known Planet', category: 'WEB / MARKETPLACE', description: 'UI contributions for a travel marketplace: multi-tab listings, event contributors, and a social video feed.', tags: ['React', 'TypeScript', 'Node.js'], href: 'https://littleknownplanet.com' },
+  { name: '4 Dots', category: 'WEB / SERVICES', description: 'A printing services website connecting a React frontend with a .NET backend.', tags: ['React', '.NET'], href: 'https://4dots.in' },
 ];
 const toolkit = [
   { name: 'The interface', tools: 'React / TypeScript / Tailwind CSS', detail: 'Interfaces that make complex ideas feel simple.' },
